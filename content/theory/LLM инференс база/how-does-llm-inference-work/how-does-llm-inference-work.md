@@ -6,11 +6,13 @@ keywords:
     - Prefill and decode
     - LLM tokenization, tokens
     - KV cache LLM
-weight: 20
-menu:
-    theory:
-        parent: "theory"
-layout: single
+date: 2026-02-22
+weight: 97
+
+# menu:
+#     theory:
+#         parent: "theory"
+# layout: single
 ---
 
 Во время инференса LLM генерирует текст по одному токену, используя внутренние механизмы внимания и знание предыдущего контекста.
@@ -56,7 +58,10 @@ Token IDs: [33, 13969, 4123, 17203, 2602, 451, 19641, 91643, 13]
 
 Для каждого нового токена модель выбирает из вероятностного распределения, сформированного на основе запроса и всех ранее сгенерированных токенов. Этот процесс авторегрессивный: токены T₀ до Tₙ₋₁ используются для генерации токена Tₙ, затем T₀ до Tₙ — для Tₙ₊₁ и так далее.
 
-![auto-regressive](feature-auto-regressive.png)
+<!-- <image-card alt="auto-regressive" src="feature-auto-regressive.png" ></image-card> -->
+
+<image-card alt="Схема" src="feature-auto-regressive.png" ></image-card>
+<image-card alt="Тест" src="img/llm-inference-diagram.png" ></image-card>
 
 Каждый новый токен добавляется к растущей последовательности. Этот авторегрессивный цикл продолжается до:
 

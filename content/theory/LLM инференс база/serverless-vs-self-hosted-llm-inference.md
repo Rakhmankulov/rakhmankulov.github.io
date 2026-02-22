@@ -1,142 +1,142 @@
 ---
-title: Serverless vs. self-hosted LLM inference
+title: Serverless vs. self-hosted LLM инференс
 description: Understand the differences between serverless LLM APIs and self-hosted LLM deployments.
+date: 2026-02-22
+weight: 94
+
 keywords:
     - Serverless vs. Self-hosted LLM inference
     - Serverless APIs, Managed APIs, serverless LLMs, serverless inference
     - Self-hosted LLMs, Self-hosted inference, open source LLMs, custom LLMs
     - LLM inference cost
-layout: single
-weight: 10          # ← вот это главное поле
+# layout: background
 ---
 
-# Serverless vs. self-hosted LLM inference
-
-When building applications with LLMs, you typically have two main infrastructure choices: **serverless** (managed APIs) and **self-hosted** solutions. Each offers distinct advantages and trade-offs in terms of ease of use, customization, scalability, and compliance.
+При создании приложений с LLM обычно есть два варианта инфраструктуры: **serverless** (управляемые API) и **self-hosted** решения. Каждый вариант имеет свои плюсы и минусы по удобству, кастомизации, масштабируемости и соответствию требованиям.
 
 ## Serverless LLM inference
 
-Serverless inference services, provided by companies like OpenAI, Anthropic, and other hosted API providers, simplify application development significantly. They manage everything for you, letting you pay per use with no infrastructure overhead.
+Serverless-сервисы инференса, такие как OpenAI, Anthropic и другие API-платформы, сильно упрощают разработку. Они берут на себя всю инфраструктуру, позволяя платить только за использование.
 
-These services are powered not just by proprietary models like GPT-5 or Claude-Sonnet-4.5. Open-source models such as DeepSeek-R1 and Llama 4 are also available via serverless endpoints through platforms like Together AI and Fireworks.
+Эти сервисы работают не только на проприетарных моделях (например, GPT-5 или Claude-Sonnet-4.5). Открытые модели, такие как DeepSeek-R1 и Llama 4, тоже доступны через serverless-эндпоинты на платформах типа Together AI и Fireworks.
 
-Key advantages of serverless APIs include:
+Основные преимущества serverless API:
 
-- **Ease of use**: You can get started quickly with minimal setup — just use an API key and a few lines of code. There is no need to manage hardware, software environments, or complex scaling logic.
-- **Rapid prototyping**: It is perfect for testing ideas quickly, building demos, or internal tooling without infrastructure overhead.
-- **Hardware abstraction**: Self-hosting LLMs at scale usually requires high-end GPUs (such as NVIDIA A100 or H100). Serverless APIs abstract these hardware complexities, allowing you to avoid GPU shortages, quota limits, and provisioning delays.
+- **Простота**: Можно быстро начать с минимальной настройкой — нужен только API-ключ и несколько строк кода. Не требуется управлять железом, окружением или сложной логикой масштабирования.
+- **Быстрое прототипирование**: Отлично подходит для тестирования идей, создания демо или внутренних инструментов без инфраструктурных затрат.
+- **Абстракция железа**: Для self-hosted LLM в масштабе обычно нужны топовые GPU (например, NVIDIA A100 или H100). Serverless API скрывают эти сложности, позволяя избежать дефицита GPU, лимитов и задержек при выделении ресурсов.
 
 ## Self-hosted LLM inference
 
-Self-hosted LLM inference means deploying and managing your own LLM infrastructure, whether on cloud GPUs, private VPCs, or on-prem servers. It gives you full control over how models are deployed, optimized, and scaled, critical for enterprises to build long-term competitive advantage.
+Self-hosted инференс — это развёртывание и управление собственной инфраструктурой LLM (в облаке, VPC или на своих серверах). Это даёт полный контроль над развертыванием, оптимизацией и масштабированием моделей — важно для долгосрочного конкурентного преимущества.
 
-Key benefits of self-hosting include:
+Основные плюсы self-hosting:
 
-- **Data privacy and compliance**: LLMs are widely used in modern applications like RAG and AI agents. These systems often require frequent access to sensitive data (e.g., customer details, medical records, financial information). This is often not an acceptable option for organizations in regulated industries with compliance and privacy requirements. Self-hosting LLMs makes sure your data always stays within your secure environment.
-- **Advanced customization and optimization**: With self-hosting, you can tailor your inference process to meet specific needs, such as:
-    - Adjusting latency and throughput trade-offs precisely.
-    - Implementing advanced optimizations like [prefill-decode disaggregation](../inference-optimization/prefill-decode-disaggregation), [prefix caching](../inference-optimization/prefix-caching), and [speculative decoding](../inference-optimization/speculative-decoding).
-    - Optimizing for long contexts or [batch-processing](../inference-optimization/static-dynamic-continuous-batching) scenarios.
-    - Enforcing structured decoding to ensure outputs follow strict schemas
-    - [Fine-tuning models](../getting-started/llm-fine-tuning) using proprietary data to achieve competitive advantages.
-- **Predictable performance and control**: When you self-host your LLMs, you have complete control over how your system behaves and performs. You’re not at the mercy of external API rate limits or sudden policy changes that might impact your application’s performance and availability.
+- **Приватность данных и комплаенс**: LLM широко используются в современных приложениях (RAG, AI-агенты), где часто нужен доступ к чувствительным данным (клиенты, медицина, финансы). Для организаций с требованиями к комплаенсу и приватности self-hosting гарантирует, что данные остаются в безопасной среде.
+- **Гибкая кастомизация и оптимизация**: Можно точно настраивать инференс под свои задачи:
+    - Тонко регулировать баланс задержки и пропускной способности.
+    - Внедрять продвинутые оптимизации: [дисагрегация prefill-decode](../inference-optimization/prefill-decode-disaggregation), [кэширование префикса](../inference-optimization/prefix-caching), [спекулятивное декодирование](../inference-optimization/speculative-decoding).
+    - Оптимизировать для длинных контекстов или [batch-processing](../inference-optimization/static-dynamic-continuous-batching).
+    - Применять структурированное декодирование для строгих схем вывода.
+    - [Дообучать модели](../getting-started/llm-fine-tuning) на собственных данных для конкурентного преимущества.
+- **Предсказуемая производительность и контроль**: При self-hosting вы полностью контролируете поведение и производительность системы. Нет зависимости от внешних лимитов API или внезапных изменений политики, которые могут повлиять на работу приложения.
 
-## Comparison summary
+## Сводная таблица
 
-Choosing between serverless and self-hosted LLM inference depends on your specific needs regarding ease of use, data privacy, performance optimization, and control.
+Выбор между serverless и self-hosted инференсом зависит от ваших задач: удобство, приватность, оптимизация, контроль.
 
-| Item | Serverless APIs | Self-hosted inference |
+| Параметр | Serverless API | Self-hosted инференс |
 | --- | --- | --- |
-| **Ease of Use** | ✅ High (simple API calls) | ⚠️ Lower (requires LLM deployment and maintenance) |
-| **Data Privacy & Compliance** | ⚠️ Limited | ✅ Full control |
-| **Customization** | ⚠️ Limited | ✅ Full flexibility |
-| **Cost at Scale** | ⚠️ Higher (usage-based, may rise significantly) | ✅ Potentially lower (predictable, optimized infrastructure) |
-| **Hardware Management** | ✅ Abstracted away | ⚠️ Requires GPU setup & maintenance |
+| **Удобство** | ✅ Высокое (простые API-вызовы) | ⚠️ Ниже (нужно развёртывание и поддержка LLM) |
+| **Приватность и комплаенс** | ⚠️ Ограничено | ✅ Полный контроль |
+| **Кастомизация** | ⚠️ Ограничено | ✅ Полная гибкость |
+| **Стоимость при масштабе** | ⚠️ Выше (зависит от объёма, быстро растёт) | ✅ Потенциально ниже (предсказуемая, оптимизированная инфраструктура) |
+| **Управление железом** | ✅ Абстрагировано | ⚠️ Требует настройки и поддержки GPU |
 
-## How to think about costs
+## Как считать стоимость
 
-With serverless APIs, the cost per token is fixed, but total spend scales linearly with usage. That’s fine for early prototyping, but it becomes expensive fast in production.
+В serverless API стоимость за токен фиксирована, но итоговые расходы растут линейно с использованием. Это удобно для прототипов, но быстро становится дорого в продакшене.
 
-With self-hosting, there’s more upfront work and infrastructure cost. However, your per-token cost will drop significantly as you scale, especially using inference optimization techniques like [KV cache offloading](../inference-optimization/kv-cache-offloading).
+В self-hosting больше работы и инфраструктурных затрат на старте, но стоимость за токен сильно падает с ростом объёма, особенно при оптимизации инференса (например, [выгрузка KV-кэша](../inference-optimization/kv-cache-offloading)).
 
-At different stages of your AI adoption, you may want to reevaluate your approach and weigh trade-offs between agility and control.
+На разных этапах внедрения AI стоит пересматривать подход и балансировать между гибкостью и контролем.
 
-It's also worth noting that both serverless and self-hosted options are getting cheaper over time, thanks to:
+Важно: оба варианта (serverless и self-hosted) становятся дешевле со временем благодаря:
 
-- Ongoing API price cuts due to increased competition. This trend is evident from providers like OpenAI, which have significantly reduced token prices over time as shown in the image below.
+- Постоянному снижению цен на API из-за конкуренции (например, OpenAI заметно снизил стоимость токенов, см. картинку ниже).
 
   <figure>
     ![gpt-cost-drop.png](./img/gpt-cost-drop.png)
-    <figcaption>[Image source: davidtsong](https://x.com/eladgil/status/1827521805755806107)</figcaption>
+    <figcaption>[Источник: davidtsong](https://x.com/eladgil/status/1827521805755806107)</figcaption>
   </figure>
     
-- GPU hardware is becoming more efficient and affordable.
-- Projects like vLLM and SGLang are enhancing the efficiency of model inferencing.
-- Better-performing open-source models that require fewer resources with different optimization techniques.
+- Железо (GPU) становится эффективнее и доступнее.
+- Проекты вроде vLLM и SGLang повышают эффективность инференса.
+- Открытые модели требуют меньше ресурсов благодаря новым оптимизациям.
 
-For more information, see the blog post [Serverless vs. Dedicated LLM Deployments: A Cost-Benefit Analysis](https://www.bentoml.com/blog/serverless-vs-dedicated-llm-deployments).
+Подробнее: [Serverless vs. Dedicated LLM Deployments: анализ стоимости](https://www.bentoml.com/blog/serverless-vs-dedicated-llm-deployments).
 
-## When to start serverless and when to take control
+## Когда начинать с serverless и когда брать контроль
 
-If you're just getting started with LLMs, serverless APIs are a great way to move fast. They make prototyping easy, lower the barrier to entry, and let you validate use cases without dealing with infrastructure.
+Если вы только начинаете с LLM, serverless API — отличный способ быстро стартовать. Прототипирование становится простым, входной порог низкий, можно быстро проверить гипотезы без инфраструктуры.
 
-But that simplicity comes with trade-offs. As your AI use cases grow, along with your need for performance, privacy, and differentiation, the limitations of serverless become hard to ignore.
+Но эта простота имеет свои ограничения. По мере роста AI-кейсов и требований к производительности, приватности и уникальности, ограничения serverless становятся заметнее.
 
-Why? Every company building serious AI products needs more than just a good model. **The inference layer is what brings that model to life**. Relying solely on third-party APIs might get your app off the ground, but it won’t give you the long-term control or competitive edge you need. Compared with self-hosted inference, serverless model APIs make it hard to get fine-grained control over performance tuning and cost optimization. You are just calling the same API as everyone else. And that lack of customization hamstrings your ability to build lasting advantage:
+Почему? Для серьёзных AI-продуктов важна не только модель, но и слой инференса — именно он «оживляет» модель. Если полагаться только на сторонние API, приложение быстро запустится, но не даст долгосрочного контроля и конкурентного преимущества. В отличие от self-hosted, serverless API сложно тонко настраивать по производительности и стоимости — вы просто вызываете тот же API, что и все остальные. Отсутствие кастомизации мешает строить устойчивое преимущество:
 
-1. **Compound AI systems** are how top teams win. [They chain multiple models and tools into rich, flexible workflows](https://www.bentoml.com/blog/a-guide-to-compound-ai-systems).
-2. **Tailored inference stacks** let you architect for precise SLAs and cost targets across different workloads.
-3. **Fine-tuned and custom models** give you domain-specific accuracy and IP protection that generic APIs can’t match.
+1. **Композитные AI-системы** — так выигрывают топовые команды. [Они связывают несколько моделей и инструментов в гибкие рабочие процессы](https://www.bentoml.com/blog/a-guide-to-compound-ai-systems).
+2. **Собственные инференс-стэки** позволяют проектировать точные SLA и стоимость для разных задач.
+3. **Дообученные и кастомные модели** дают точность и защиту IP, которых нет у универсальных API.
 
-At the end of the day, **inference quality is product quality**. If your AI is mission-critical, you’ll need infrastructure that’s fast, reliable, secure, and tailored to your goals.
+В итоге, **качество инференса = качество продукта**. Если AI — критически важная часть, нужна инфраструктура, которая быстрая, надёжная, безопасная и заточена под ваши цели.
 
-That’s when it’s time to go beyond APIs and start owning your inference.
+Вот тогда пора выходить за рамки API и брать инференс под свой контроль.
 
-## What I have to solve if choosing self-hosting?
+## Что нужно решить при выборе self-hosting?
 
-Self-hosting LLMs gives you full control and flexibility, but also comes with operational responsibilities beyond just spinning up GPU servers, such as:
+Self-hosting LLM даёт полный контроль и гибкость, но требует дополнительных усилий:
 
-- **DevOps time for setup and maintenance**: Setting up infrastructure, managing deployments, and keeping systems running smoothly.
-- **Monitoring and alerting systems**: Implementing observability (including LLM-specific metrics like TTFT and TPS) to track performance, detect failures, and maintain SLAs.
-- **Costs of data transfer and storage**: Handling large model files and managing cloud bandwidth or disk I/O costs.
-- **Potential downtime and redundancy costs**: Ensuring high availability and planning for failover in case of hardware or service interruptions.
-- **Slow cold starts**: This includes booting GPU instances, pulling LLM containers, and loading model weights into memory. Optimizing the startup time is critical for fast scaling to handle real-time or bursty workloads.
+- **DevOps-время на настройку и поддержку**: инфраструктура, деплой, стабильная работа.
+- **Мониторинг и алерты**: наблюдаемость (включая метрики LLM, такие как TTFT и TPS), отслеживание производительности, отказов, SLA.
+- **Затраты на передачу и хранение данных**: большие файлы моделей, облачный трафик, дисковые операции.
+- **Риски простоев и резервирования**: высокая доступность, планирование отказоустойчивости.
+- **Медленные cold start**: запуск GPU-инстансов, загрузка контейнеров LLM, подгрузка весов. Оптимизация старта критична для масштабирования в реальном времени.
 
-That said, you don’t have to build everything from scratch. An inference platform can help mitigate these costs and reduce the operational overhead, potentially making them more cost-effective in the long run.
+Но не обязательно всё строить с нуля. Платформа инференса поможет снизить эти затраты и операционные риски, сделав self-hosting более выгодным.
 
 ---
 
-At [Bento](https://www.bentoml.com/), we work to help enterprises self-host any open and custom LLMs with flexible distributed architecture and tailored inference optimization. With Bento Inference Platform, you can achieve up to 6x lower cost than serverless APIs.
+В [Bento](https://www.bentoml.com/) мы помогаем компаниям развёртывать любые открытые и кастомные LLM с гибкой архитектурой и оптимизацией инференса. С Bento Inference Platform можно снизить стоимость до 6 раз по сравнению с serverless API.
 
 <div style={{ margin: '3rem 0' }}>
-[<Button>Talk to us</Button>](https://l.bentoml.com/contact-us-llm-inference-handbook)
+[<Button>Связаться с нами</Button>](https://l.bentoml.com/contact-us-llm-inference-handbook)
 </div>
 
-## FAQs
+## Частые вопросы
 
-### What does self-hosted AI mean?
+### Что значит self-hosted AI?
 
-Self-hosted AI means running and managing AI models on your own infrastructure (e.g., on-premises data centers, private cloud, or dedicated GPU servers).
+self-hosted AI — это запуск и управление AI-моделями на собственной инфраструктуре (например, дата-центры, приватное облако, выделенные GPU-серверы).
 
-With self-hosting, you keep full control over data privacy, performance tuning, and cost optimization. It’s useful for teams that need to:
+При self-hosting вы полностью контролируете приватность данных, настройку производительности и оптимизацию затрат. Это полезно для команд, которым нужно:
 
-- Deploy open-source models like DeepSeek-R1
-- Customize models with specific optimization techniques
-- Fine-tune models with proprietary data
-- Meet internal compliance or data-sovereignty requirements
+- Развёртывать открытые модели (например, DeepSeek-R1)
+- Кастомизировать модели с помощью специальных оптимизаций
+- Дообучать модели на собственных данных
+- Соблюдать внутренние требования по комплаенсу и хранению данных
 
-### Are proprietary models more powerful than open-source models?
+### Проприетарные модели мощнее открытых?
 
-Not always. It depends on your goals.
+Не всегда. Всё зависит от задач.
 
-Proprietary models often lead in general-purpose reasoning, coding, and conversation quality because they’re trained on massive datasets and refined through advanced alignment techniques. They’re great if you want instant access to high performance without managing infrastructure.
+Проприетарные модели часто лидируют по универсальному мышлению, коду и качеству диалога — они обучены на огромных датасетах и доработаны сложными техниками согласования. Это хороший выбор, если нужна высокая производительность «из коробки» без инфраструктуры.
 
-Open-source models, such as Llama, Qwen, and DeepSeek, offer far more control, transparency, and flexibility. You can fine-tune them, deploy them anywhere, and optimize for latency and cost. The gap between open and proprietary models has narrowed quickly, especially for domain-specific workloads.
+Открытые модели (Llama, Qwen, DeepSeek) дают больше контроля, прозрачности и гибкости. Их можно дообучать, развёртывать где угодно, оптимизировать по задержке и стоимости. Разрыв между открытыми и проприетарными моделями быстро сокращается, особенно для узкоспециализированных задач.
 
-For example, when you fine-tune an open-source LLM with proprietary data in legal, medical or financial contexts, it can outperform proprietary models in that specific domain. This is exactly the kind of specialization many industries need today.
+Например, если дообучить открытую LLM на собственных данных (юридические, медицинские, финансовые), она может превзойти проприетарные модели в этой области. Такой подход нужен многим индустриям.
 
 ## Дополнительные ресурсы
 >  * [Secure and Private DeepSeek Deployment with BentoML](https://www.bentoml.com/blog/secure-and-private-deepseek-deployment-with-bentoml)
->  * [Serverless vs. Dedicated LLM Deployments: A Cost-Benefit Analysis](https://www.bentoml.com/blog/serverless-vs-dedicated-llm-deployments)
+>  * [Serverless vs. Dedicated LLM Deployments: анализ стоимости](https://www.bentoml.com/blog/serverless-vs-dedicated-llm-deployments)
 >  * [Building RAG Systems with Open-Source and Custom AI Models](https://www.bentoml.com/blog/building-rag-with-open-source-and-custom-ai-models)
 >  * [ChatGPT Usage Limits: What They Are and How to Get Rid of Them](https://www.bentoml.com/blog/chatgpt-usage-limits-explained-and-how-to-remove-them)

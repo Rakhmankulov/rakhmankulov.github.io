@@ -1,209 +1,213 @@
 ---
-title: Distributed inference for LLMs
-description: Distributed inference is the practice of running model inference across multiple GPUs, workers, nodes, or regions to achieve scalable, reliable, and cost-efficient serving. This document explains what distributed inference is, why teams use it in production, its key challenges, and how modern runtimes and platforms support distributed LLM inference at scale.
+title: Распределённый инференс для LLM
+description: Распределённый инференс — это практика запуска инференса модели на нескольких GPU, работниках, узлах или регионах для достижения масштабируемого, надёжного и экономичного сервиса. В этом документе объясняется, что такое распределённый инференс, почему команды используют его в продакшене, какие ключевые проблемы он решает и как современные среды выполнения и платформы поддерживают распределённый инференс LLM в масштабе.
+date: 2026-02-22
+weight: 95
+
 keywords:
-    - Distributed inference
+    - Распределённый инференс
 ---
 
-# What is distributed inference?
+# Что такое распределённый инференс?
 
-Distributed inference improves how AI systems handle production workloads by spreading inference computation across multiple connected machines. Rather than pushing all requests through a single server, the system coordinates many workers so no single device becomes a bottleneck.
+Распределённый инференс улучшает работу AI-систем в продакшене, распределяя вычисления инференса между несколькими машинами. Вместо того чтобы пропускать все запросы через один сервер, система координирует множество воркеров, чтобы ни одно устройство не стало узким местом.
 
-This approach allows inference systems to scale smoothly as traffic grows, stay resilient when individual components fail, and expose clear visibility into latency, throughput, and resource usage.
+Такой подход позволяет масштабировать инференс по мере роста трафика, сохранять устойчивость при сбоях отдельных компонентов и получать прозрачную картину по задержкам, пропускной способности и использованию ресурсов.
 
-## Understanding distributed inference
+## Как устроен распределённый инференс
 
-Depending on the perspective, distributed inference can describe different layers of the system.
+В зависимости от уровня, распределённый инференс может означать разные слои системы.
 
-### Global distributed inference architecture
+### Глобальная архитектура распределённого инференса
 
-On the macro level, distributed inference refers to high-level deployment and topology decisions:
+На макроуровне распределённый инференс — это решения о развертывании и топологии:
 
-- Running a model, or multiple replicas of it, across multiple geographic regions
-- Serving traffic on heterogeneous GPU clusters with different hardware profiles
-- Orchestrating inference across [multiple cloud (or NeoCloud) providers](../infrastructure-and-operations/multi-cloud-and-cross-region-inference), and [on-prem data centers](../infrastructure-and-operations/on-prem-llms)
+- Запуск модели или её реплик в разных географических регионах
+- Обслуживание трафика на гетерогенных GPU-кластерах с разным железом
+- Оркестрация инференса между [несколькими облаками](../infrastructure-and-operations/multi-cloud-and-cross-region-inference) и [on-prem дата-центрами](../infrastructure-and-operations/on-prem-llms)
 
-At this level, teams distribute inference geographically to reduce latency, meet data residency requirements, improve fault tolerance, or take advantage of cheaper or more available GPU capacity in specific regions.
+На этом уровне команды распределяют инференс географически, чтобы снизить задержку, соблюдать требования по хранению данных, повысить отказоустойчивость или использовать более дешёвые/доступные GPU в определённых регионах.
 
-Ideally, a distributed inference system treats all of these compute resources as one logical serving layer. Incoming traffic is routed to the best available location based on factors like latency, current load, cost, or GPU availability. This also means it is able to implement multi-region routing, seamless failover, and elastic scaling without disrupting user experience.
+Идеально, если система распределённого инференса воспринимает все вычислительные ресурсы как единый слой обслуживания. Входящий трафик направляется в лучшее доступное место с учётом задержки, текущей нагрузки, стоимости или доступности GPU. Это позволяет реализовать маршрутизацию между регионами, бесшовный failover и эластичное масштабирование без ухудшения пользовательского опыта.
 
-Macro-level distributed inference is primarily about where inference runs: location, GPU sourcing, and large-scale failure domains.
+Макроуровень — это про то, где запускается инференс: местоположение, источники GPU и крупные зоны отказа.
 
-### Inference parallelism and runtime optimizations
+### Параллелизм инференса и оптимизации рантайма
 
-On the micro level, distributed inference refers to the low-level optimization techniques that split the work of a single inference request, or a batch of requests, across workers, nodes, or GPUs.
+На микроуровне распределённый инференс — это низкоуровневые техники оптимизации, которые делят работу одного запроса или батча между воркерами, узлами или GPU.
 
-These techniques focus on parallelizing the internal mechanics of inference itself and have driven most of the recent efficiency gains in large-scale LLM serving.
+Эти техники фокусируются на параллелизации внутренних механизмов инференса и обеспечивают большую часть недавних успехов в масштабируемом сервинге LLM.
 
-Common examples include:
+Примеры:
 
-- [Prefill–decode disaggregation](../inference-optimization/prefill-decode-disaggregation). Separating prefill and decode work so each stage can run on specialized hardware.
-- [KV cache offloading](../inference-optimization/kv-cache-offloading). Moving KV cache data to CPU memory or remote storage to reduce GPU memory pressure and compute costs.
-- [Prefix-aware routing](../inference-optimization/prefix-aware-routing). Routing a request to the worker that holds the KV cache for that session, reducing recomputation and improving throughput.
-- [Parallelism](../inference-optimization/data-tensor-pipeline-expert-hybrid-parallelism). Splitting a large model across multiple GPUs when it cannot fit on a single device. This can take several forms, such as single-node multi-GPU and multi-node multi-GPU.
+- [Дисагрегация prefill–decode](../inference-optimization/prefill-decode-disaggregation): разделение prefill и decode для запуска на специализированном железе.
+- [Выгрузка KV-кэша](../inference-optimization/kv-cache-offloading): перенос KV-кэша в память CPU или удалённое хранилище для снижения нагрузки на GPU и стоимости вычислений.
+- [Prefix-aware routing](../inference-optimization/prefix-aware-routing): маршрутизация запроса к воркеру, который хранит KV-кэш для этой сессии, чтобы снизить повторные вычисления и повысить пропускную способность.
+- [Параллелизм](../inference-optimization/data-tensor-pipeline-expert-hybrid-parallelism): разделение большой модели между несколькими GPU, если она не помещается на одном устройстве (варианты: мульти-GPU на одном узле и мульти-GPU на нескольких узлах).
 
-Micro-level distributed inference is mainly about how inference runs efficiently, independent of where the infrastructure is deployed.
+Микроуровень — это про то, как инференс работает эффективно, независимо от места развертывания инфраструктуры.
 
-## Why should you run distributed inference?
+## Зачем запускать распределённый инференс?
 
-As models grow larger and traffic becomes less predictable, distributing inference becomes a practical necessity rather than an optimization.
 
-Below are the key reasons teams adopt distributed inference in production systems.
+По мере увеличения моделей и непредсказуемости трафика распределённый инференс становится необходимостью, а не просто оптимизацией.
 
-### Scale beyond a single GPU or machine
+Вот основные причины, почему команды внедряют распределённый инференс в продакшене.
 
-A single GPU has hard limits on throughput, memory, and concurrency. Distributed inference allows systems to scale horizontally by adding more workers, rather than forcing all traffic through one device.
+### Масштабирование за пределы одного GPU или машины
 
-This is especially important for:
+Один GPU имеет жёсткие ограничения по пропускной способности, памяти и параллелизму. Распределённый инференс позволяет масштабироваться горизонтально — добавлять воркеры, а не пропускать весь трафик через одно устройство.
 
-- Concurrent chat or agent workloads
-- High-throughput batch inference pipelines
-- Models with long context windows and large KV caches
+Особенно важно для:
 
-Instead of hitting fixed ceilings, capacity grows with your infrastructure.
+- Одновременных чатов и AI-агентов
+- Высокопроизводительных batch-инференсов
+- Моделей с длинными контекстами и большими KV-кэшами
 
-### Serve larger models that don’t fit on one GPU
+Вместо фиксированных потолков ёмкость растёт вместе с инфраструктурой.
 
-Many modern LLMs exceed the memory capacity of a single GPU, even with quantization, particularly once KV cache growth is taken into account. As model parameter counts increase, so do memory and compute requirements for inference.
+### Обслуживание больших моделей, которые не помещаются на одном GPU
 
-Distributed inference makes it possible to serve these models by splitting them across multiple GPUs or even multiple nodes. This enables teams to run larger models, support longer contexts, and avoid out-of-memory failures that would otherwise make production deployment impossible.
+Современные LLM часто превышают объём памяти одного GPU, даже с квантованием, особенно с учётом роста KV-кэша. Чем больше параметров, тем выше требования к памяти и вычислениям.
 
-### Increase reliability and fault tolerance
+Распределённый инференс позволяет обслуживать такие модели, разделяя их между несколькими GPU или узлами. Это даёт возможность запускать большие модели, поддерживать длинные контексты и избегать ошибок OOM, которые мешают продакшену.
 
-Production inference systems must tolerate failures. GPUs crash, nodes go offline, and entire regions can become unavailable. With distributed inference:
+### Надёжность и отказоустойчивость
 
-- Traffic can be rerouted automatically when a worker fails
-- Regional outages do not bring down the entire service
-- Capacity can be rebalanced dynamically during incidents
+Продакшен-инференс должен выдерживать сбои: GPU могут падать, узлы — отключаться, регионы — становиться недоступными. С распределённым инференсом:
 
-This transforms inference from a fragile single point of failure into a resilient, production-grade service.
+- Трафик автоматически перенаправляется при сбое воркера
+- Региональные сбои не «роняют» весь сервис
+- Ёмкость динамически перераспределяется во время инцидентов
 
-### Reduce costs through smarter resource usage
+Инференс превращается из хрупкой точки отказа в устойчивый сервис.
 
-Distributed inference makes it possible to optimize cost without sacrificing performance. Instead of over-provisioning a single powerful machine, teams can allocate resources more precisely.
+### Снижение затрат за счёт оптимизации ресурсов
 
-Common cost-saving strategies include:
+Распределённый инференс позволяет оптимизировать расходы без потери производительности. Вместо избыточного мощного железа можно точнее распределять ресурсы.
 
-- Mixing different GPU types for different inference workloads
-- Scaling capacity down during off-peak hours
-- Routing traffic to lower-cost regions or providers
-- Offloading memory-heavy components such as KV cache
+Стратегии экономии:
 
-The result is higher GPU utilization and a lower cost per request.
+- Использование разных типов GPU для разных задач
+- Масштабирование вниз в непиковые часы
+- Маршрутизация трафика в дешёвые регионы или к провайдерам
+- Выгрузка компонентов, требующих много памяти (например, KV-кэш)
+
+В итоге — выше загрузка GPU и ниже стоимость запроса.
 
 ---
 
-Generally speaking, you need distributed inference when:
+В целом, распределённый инференс нужен, если:
 
-- Traffic is unpredictable or spiky
-- Models are large or memory-intensive
-- Uptime and latency matter
-- GPU cost and utilization need active optimization
+- Трафик непредсказуемый или скачкообразный
+- Модели большие или требовательные к памяти
+- Важны uptime и задержка
+- Нужно активно оптимизировать стоимость и загрузку GPU
 
-At that point, scaling up a single server is no longer enough. Distributed inference becomes the foundation of your serving architecture.
+В этот момент масштабирование одного сервера уже не работает. Распределённый инференс становится основой архитектуры сервинга.
 
-## Challenges of distributed inference
+## Сложности распределённого инференса
 
-Before moving beyond single-node deployments, it’s important to understand the following trade-offs.
+Перед переходом к распределённым системам важно понимать следующие компромиссы.
 
-### Network communication overhead
+### Сетевые накладные расходы
 
-Distributed inference relies on frequent communication between workers, GPUs, and nodes. Model sharding, prefill–decode disaggregation, KV cache movement, and cross-node coordination all introduce network overhead.
+Распределённый инференс требует частой коммуникации между воркерами, GPU и узлами. Шардинг моделей, дисагрегация prefill–decode, перемещение KV-кэша и координация между узлами — всё это создаёт сетевые накладные.
 
-This can lead to:
+Это может привести к:
 
-- Increased end-to-end latency due to inter-GPU or inter-node communication
-- Sensitivity to network bandwidth and jitter
-- Performance degradation if interconnects are slow or unreliable
+- Росту задержки из-за меж-GPU или меж-узловой коммуникации
+- Чувствительности к пропускной способности и джиттеру
+- Проседанию производительности при медленных или ненадёжных соединениях
 
-As inference becomes more distributed, networking often becomes a bottleneck rather than raw compute.
+Чем больше распределённости, тем чаще сеть становится узким местом, а не вычисления.
 
-### Build and operational complexity
+### Сложность разработки и эксплуатации
 
-Distributed systems are inherently more complex to build and operate than single-node setups. Teams must manage multiple moving parts, including orchestration, autoscaling, routing, health checks, and observability.
+Распределённые системы сложнее строить и поддерживать, чем одиночные узлы. Нужно управлять множеством компонентов: оркестрация, автоскейлинг, маршрутизация, мониторинг, проверки здоровья.
 
-Common challenges include:
+Типичные сложности:
 
-- Coordinating deployments across clusters or regions
-- Managing configuration drift between environments
-- Ensuring consistent behavior during scaling events
+- Координация деплоев между кластерами и регионами
+- Управление конфигурациями между средами
+- Стабильность поведения при масштабировании
 
-Without strong tooling and specialized expertise, operational complexity can quickly outweigh performance gains.
+Без хороших инструментов и экспертизы операционная сложность может перевесить выгоды.
 
-### Unified observability and cost visibility
+### Единая наблюдаемость и прозрачность затрат
 
-As inference spreads across multiple workers, GPUs, clusters, and regions, maintaining a unified view of system behavior becomes significantly harder.
+Когда инференс распределён между воркерами, GPU, кластерами и регионами, поддерживать единую картину становится намного сложнее.
 
-Teams often struggle with:
+Команды сталкиваются с:
 
-- Correlating latency, throughput, and errors across distributed components
-- Understanding GPU utilization and memory pressure at a global level
-- Attributing cost to specific models, workloads, or tenants
-- Detecting inefficiencies such as idle GPUs or imbalanced traffic
+- Корреляцией задержки, пропускной способности и ошибок между компонентами
+- Пониманием загрузки GPU и давления на память в масштабе
+- Привязкой затрат к моделям, задачам или клиентам
+- Поиском неэффективности (простаивающие GPU, дисбаланс трафика)
 
-Without [centralized observability](../infrastructure-and-operations/challenges-in-building-infra-for-llm-inference/comprehensive-observability) and cost visibility, distributed inference systems can become opaque. This makes it difficult to optimize performance and troubleshoot issues.
+Без [централизованной наблюдаемости](../infrastructure-and-operations/challenges-in-building-infra-for-llm-inference/comprehensive-observability) и прозрачности затрат система становится «чёрным ящиком», что мешает оптимизации и отладке.
 
-### State management and consistency
+### Управление состоянием и консистентность
 
-Many inference workloads are stateful. Chat sessions, agent workflows, streaming responses, and KV cache reuse all rely on preserving state across requests.
+Многие инференс-задачи — stateful: чаты, агенты, стриминг, повторное использование KV-кэша — всё это требует сохранения состояния между запросами.
 
-In distributed environments, this raises questions such as:
+В распределённой среде возникают вопросы:
 
-- Where session state or KV cache should live
-- How state is shared, replicated, or migrated between workers
-- What happens when a worker holding critical state fails
+- Где хранить состояние сессии или KV-кэш
+- Как состояние делится, реплицируется или мигрирует между воркерами
+- Что делать при сбое воркера с критическим состоянием
 
-Poor state management can lead to recomputation, cache misses, or degraded latency.
+Плохое управление состоянием ведёт к повторным вычислениям, промахам кэша и росту задержки.
 
-## Designing and running a distributed inference system
+## Как проектировать и запускать распределённый инференс
 
-Building a distributed inference system is not just about adding more GPUs. It requires you to coordinate compute, schedule work intelligently, manage state, and route traffic efficiently across a fleet of heterogeneous resources.
+Построение распределённого инференса — это не просто добавление GPU. Нужно координировать вычисления, грамотно планировать работу, управлять состоянием и эффективно маршрутизировать трафик между разнородными ресурсами.
 
-At a high level, a production-grade distributed inference system needs the following components.
+В целом, продакшен-решение требует следующих компонентов:
 
-### Intelligent scheduling and request routing
+### Интеллектуальное планирование и маршрутизация запросов
 
-At the heart of distributed inference is a scheduler that decides where each request should run. This decision depends on multiple factors:
+В центре распределённого инференса — планировщик, который решает, где выполнять каждый запрос. Решение зависит от:
 
-- GPU availability and memory pressure
-- Current load and queue depth
-- Request characteristics such as prompt length, batch size, and streaming behavior
-- Cached state such as KV cache size and locality
-- Latency or cost constraints
+- Доступности GPU и давления на память
+- Текущей нагрузки и глубины очереди
+- Характеристик запроса (длина prompt, размер батча, стриминг)
+- Кэшированного состояния (размер и локальность KV-кэша)
+- Ограничений по задержке и стоимости
 
-A naive round-robin scheduler quickly breaks down at scale. Modern inference systems rely on dynamic, state-aware scheduling to maintain throughput and predictable latency.
+Простой round-robin быстро ломается на масштабе. Современные системы используют динамическое, state-aware планирование для стабильной пропускной способности и предсказуемой задержки.
 
-### Distributed inference runtimes
+### Рантаймы распределённого инференса
 
-Most teams do not build distributed inference from scratch. Instead, they rely on specialized runtimes that implement core [inference techniques](../inference-optimization/) such as parallelism and prefix-aware routing.
+Большинство команд не строят распределённый инференс с нуля, а используют специализированные рантаймы, реализующие [техники инференса](../inference-optimization/) (параллелизм, prefix-aware routing).
 
-In practice, teams often run inference runtimes such as vLLM, SGLang, and llm-d on Kubernetes. To some extent, they do help handle how inference runs at the micro level, but they do not fully solve macro-level concerns for LLM workloads such as multi-region routing, autoscaling, or operational visibility.
+На практике часто запускают vLLM, SGLang, llm-d на Kubernetes. Они помогают с микроуровнем, но не решают макроуровневые задачи: маршрутизация между регионами, автоскейлинг, наблюдаемость.
 
-### Orchestration, scaling, and observability
+### Оркестрация, масштабирование и наблюдаемость
 
-To run distributed inference in production, teams must also integrate:
+Для продакшен-инференса нужно интегрировать:
 
-- Autoscaling policies across GPU pools
-- Health checks and failure recovery
-- Unified observability for [latency (e.g., TTFT and ITL)](../inference-optimization/llm-inference-metrics), throughput, GPU utilization, and errors
-- Cost attribution across models, regions, and workloads
+- Автоскейлинг GPU-пулов
+- Проверки здоровья и восстановление после сбоев
+- Единую наблюдаемость по [задержке (TTFT, ITL)](../inference-optimization/llm-inference-metrics), пропускной способности, загрузке GPU и ошибкам
+- Привязку затрат к моделям, регионам и задачам
 
-This orchestration layer is often where most engineering effort goes, especially when operating across multiple clusters or clouds.
+Именно в оркестрационном слое сосредоточено большинство инженерных усилий, особенно при работе с несколькими кластерами или облаками.
 
-## Using a platform instead of building everything yourself
+## Использование платформы вместо самостоятельной сборки
 
-For many teams, building and maintaining all of these layers internally becomes a long-term operational burden. This is where a production inference platform can significantly reduce complexity.
+Для многих команд самостоятельная сборка и поддержка всех слоёв становится долгосрочной операционной нагрузкой. Здесь платформа инференса может существенно снизить сложность.
 
-The Bento Inference Platform provides a production-ready foundation for distributed inference, integrating:
+Bento Inference Platform — готовая основа для распределённого инференса, включает:
 
-- Intelligent request routing and scheduling
-- Support for modern inference runtimes such as vLLM and SGLang
-- Multi-GPU, cross-region and multi-cloud deployment
-- Autoscaling, fault tolerance, and unified observability
-- Cost-aware resource management across environments
+- Интеллектуальную маршрутизацию и планирование
+- Поддержку современных рантаймов (vLLM, SGLang)
+- Мульти-GPU, кросс-регион и мультиоблачное развёртывание
+- Автоскейлинг, отказоустойчивость, единую наблюдаемость
+- Управление ресурсами с учётом стоимости
 
-Rather than stitching together everything yourself, a platform-based approach allows teams to focus on models and applications, while the distributed inference system is managed as a cohesive layer.
+Вместо ручной сборки платформа позволяет команде сосредоточиться на моделях и приложениях, а распределённый инференс управляется как единый слой.
 
 ## Дополнительные ресурсы
 >  * [The Shift to Distributed LLM Inference](https://www.bentoml.com/blog/the-shift-to-distributed-llm-inference)
->  * [3 Levels from Laptop to Cluster-Scale Distributed Inference](https://www.bentoml.com/blog/running-local-llms-with-ollama-3-levels-from-local-to-distributed-inference)
+>  * [3 уровня: от ноутбука до кластерного распределённого инференса](https://www.bentoml.com/blog/running-local-llms-with-ollama-3-levels-from-local-to-distributed-inference)

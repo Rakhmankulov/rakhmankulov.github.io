@@ -59,6 +59,8 @@
   <meta property="og:locale" content="ru">
   <meta property="og:type" content="article">
     <meta property="article:section" content="theory">
+    <meta property="article:published_time" content="2026-02-22T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-02-22T00:00:00+00:00">
 
   
   <meta name="twitter:card" content="summary">
@@ -222,11 +224,11 @@
       "@type": "Person",
       "name": ""
     },
+    "copyrightYear": "2026",
+    "dateCreated": "2026-02-22T00:00:00\u002b00:00",
+    "datePublished": "2026-02-22T00:00:00\u002b00:00",
     
-    
-    
-    
-    
+    "dateModified": "2026-02-22T00:00:00\u002b00:00",
     
     "keywords": ["LLM inference, how LLM inference works, autoregressive decoding, transformer inference","Prefill and decode","LLM tokenization, tokens","KV cache LLM"],
     
@@ -541,6 +543,89 @@
   <article>
     
     
+      
+      
+      
+      
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+  
+  
+    
+    
+  
+
+
+
+
+  
+    
+    
+      
+      
+    
+  
+
+
+
+
+
+    <div id="hero" class="h-[150px] md:h-[200px]"></div>
+  
+  <div class="fixed inset-x-0 top-0 h-[800px] single_hero_background nozoom">
+    
+    
+    
+    <img
+      id="background-image"
+      src="/img/Background_hu_6f246542646fe36c.jpeg"
+      role="presentation"
+      loading="eager"
+      decoding="async"
+      fetchpriority="high"
+      class="absolute inset-0 w-full h-full object-cover"
+      >
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-neutral dark:from-neutral-800 to-transparent mix-blend-normal"></div>
+    <div
+      class="absolute inset-0 opacity-60 bg-gradient-to-t from-neutral dark:from-neutral-800 to-neutral-100 dark:to-neutral-800 mix-blend-normal"></div>
+  </div>
+
+  
+    <div
+      id="background-blur"
+      class="fixed opacity-0 inset-x-0 top-0 h-full single_hero_background nozoom backdrop-blur-xl bg-neutral-100/75 dark:bg-neutral-800/60"></div>
+    
+    
+    <script
+      type="text/javascript"
+      src="/js/background-blur.min.605b3b942818f0ab5a717ae446135ec46b8ee5a2ad12ae56fb90dc2a76ce30c388f9fec8bcc18db15bd47e3fa8a09d779fa12aa9c184cf614a315bc72c6c163d.js"
+      integrity="sha512-YFs7lCgY8KtacXrkRhNexGuO5aKtEq5W&#43;5DcKnbOMMOI&#43;f7IvMGNsVvUfj&#43;ooJ13n6EqqcGEz2FKMVvHLGwWPQ=="
+      data-blur-id="background-blur"
+      data-image-id="background-image"
+      data-image-url="/img/Background_hu_6f246542646fe36c.jpeg"></script>
+  
+      
+    
 
     
     <header id="single_header" class="mt-5 max-w-prose">
@@ -598,7 +683,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="0001-01-01T00:00:00&#43;00:00">1 января 0001</time><span class="px-2 text-primary-500">&middot;</span><span>940 слов</span><span class="px-2 text-primary-500">&middot;</span><span title="Время чтения">5 минут</span>
+      <time datetime="2026-02-22T00:00:00&#43;00:00">22 февраля 2026</time><span class="px-2 text-primary-500">&middot;</span><span>940 слов</span><span class="px-2 text-primary-500">&middot;</span><span title="Время чтения">5 минут</span>
     
 
     
@@ -833,14 +918,9 @@
 </h3>
 <p>После prefill LLM переходит к фазе decode, где генерирует новые токены последовательно, по одному.</p>
 <p>Для каждого нового токена модель выбирает из вероятностного распределения, сформированного на основе запроса и всех ранее сгенерированных токенов. Этот процесс авторегрессивный: токены T₀ до Tₙ₋₁ используются для генерации токена Tₙ, затем T₀ до Tₙ — для Tₙ₊₁ и так далее.</p>
-<figure><img
-    class="my-0 rounded-md"
-    loading="lazy"
-    decoding="async"
-    fetchpriority="low"
-    alt="auto-regressive"
-    src="feature-auto-regressive.png"
-    ></figure>
+<!-- <image-card alt="auto-regressive" src="feature-auto-regressive.png" ></image-card> -->
+<p><image-card alt="Схема" src="feature-auto-regressive.png" ></image-card>
+<image-card alt="Тест" src="img/llm-inference-diagram.png" ></image-card></p>
 <p>Каждый новый токен добавляется к растущей последовательности. Этот авторегрессивный цикл продолжается до:</p>
 <ul>
 <li>достижения максимального лимита токенов,</li>
@@ -965,12 +1045,12 @@
               class="flex text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
               href="/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/training-inference-differences/">
               <span class="leading-6">
-                <span class="inline-block rtl:rotate-180">&larr;</span>&ensp;Training vs. inference
+                <span class="inline-block rtl:rotate-180">&larr;</span>&ensp;Обучение и инференс
               </span>
             </a>
             
               <span class="ms-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                <time datetime="0001-01-01T00:00:00&#43;00:00">1 января 0001</time>
+                <time datetime="2026-02-22T00:00:00&#43;00:00">22 февраля 2026</time>
               </span>
             
           
@@ -979,14 +1059,14 @@
           
             <a
               class="flex text-right text-neutral-700 hover:text-primary-600 dark:text-neutral dark:hover:text-primary-400"
-              href="/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/serverless-vs-self-hosted-llm-inference/">
+              href="/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/cpu-vs-gpu-vs-tpu/">
               <span class="leading-6">
-                Serverless vs. self-hosted LLM inference&ensp;<span class="inline-block rtl:rotate-180">&rarr;</span>
+                Где запускается инференс LLM?&ensp;<span class="inline-block rtl:rotate-180">&rarr;</span>
               </span>
             </a>
             
               <span class="me-6 mt-1 text-xs text-neutral-500 dark:text-neutral-400">
-                <time datetime="0001-01-01T00:00:00&#43;00:00">1 января 0001</time>
+                <time datetime="2026-02-22T00:00:00&#43;00:00">22 февраля 2026</time>
               </span>
             
           

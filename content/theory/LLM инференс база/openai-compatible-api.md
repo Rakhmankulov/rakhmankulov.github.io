@@ -1,53 +1,54 @@
 ---
-sidebar_position: 7
+title: OpenAI-совместимый API
 description: An OpenAI-compatible API implements the same request and response formats as OpenAI's official API, allowing developers to switch between different models without changing existing code.
+date: 2026-02-22
+weight: 93
+
 keywords:
     - OpenAI-compatible API, OpenAI-compatible endpoint, OpenAI-compatible server
     - OpenAI API, OpenAI compatibility, ChatGPT
     - LLM inference API
 ---
 
-# OpenAI-compatible API
+Когда LLM запущена, нужен стандартный способ взаимодействия с ней. Для этого и предназначен OpenAI-совместимый API.
 
-Once an LLM is running, you’ll need a standard way to interact with it. That’s where the OpenAI-compatible API comes in.
+## Что такое OpenAI-совместимый API?
 
-## What is an OpenAI-compatible API?
+OpenAI-совместимый API — это любой API, который повторяет интерфейс, схему запросов/ответов и модель аутентификации оригинального API OpenAI. Хотя OpenAI официально не объявляла этот формат стандартом, их API стал де-факто интерфейсом для LLM.
 
-An OpenAI-compatible API is any API that replicates the interface, request/response schema, and authentication model of OpenAI’s original API. While OpenAI didn’t formally define this as an industry standard, their API has become the de facto interface for LLMs.
+Взлёт ChatGPT в конце 2022 года показал, насколько этот подход мощный и удобный:
 
-The rise of ChatGPT in late 2022 demonstrated how powerful and user-friendly this approach could be:
+- Чистый, хорошо документированный API позволяет разработчикам легко создавать приложения с LLM.
+- Модели вроде `gpt-4o` доступны через простые и единообразные эндпоинты.
 
-- The clean, well-documented API makes it easy for developers to build applications with LLMs.
-- Models like `gpt-4o` are accessible through simple, consistent endpoints.
+В результате API быстро распространился и стал стандартом во многих сферах.
 
-As a result, it sees rapid adoption and ecosystem growth across various industries.
+## Почему важна совместимость?
 
-## Why does compatibility matter?
+API OpenAI помогли запустить волну AI-разработки, но их широкое распространение создало эффект «запертой экосистемы». Многие инструменты, фреймворки и SDK теперь заточены под схему OpenAI. Это становится проблемой, если вы хотите:
 
-While OpenAI’s APIs helped kickstart the AI application development, their widespread adoption created ecosystem lock-in. Many developer tools, frameworks, and SDKs are now built specifically around the OpenAI schema. That becomes a problem if you want to:
+- Перейти на другую модель
+- Перейти на self-hosted
+- Попробовать нового провайдера инференса
 
-- Switch to a different model
-- Move to a self-hosted deployment
-- Try a new inference provider
+В таких случаях переписывать логику приложения под новый API — долго и рискованно.
 
-In these cases, rewriting application logic to fit a new API can be tedious and error-prone.
+OpenAI-совместимые API решают эти задачи:
 
-OpenAI-compatible APIs address these challenges by providing:
+- **Drop-in замена**: Можно заменить hosted API OpenAI на свой self-hosted или open-source, не меняя код приложения.
+- **Бесшовная миграция**: Переход между провайдерами или self-hosted с минимальными изменениями.
+- **Единая интеграция**: Совместимость с инструментами и фреймворками, которые используют схему OpenAI (например, эндпоинты `chat/completions`, `embeddings`).
 
-- **Drop-in replacement**: Swap out OpenAI’s hosted API for your own self-hosted or open-source model, without changing your application code.
-- **Seamless migration**: Move between providers or self-hosted deployments with minimal disruption.
-- **Consistent integration**: Maintain compatibility with tools and frameworks that rely on the OpenAI API schema (e.g., `chat/completions`, `embeddings` endpoints).
+Многие [бэкенды инференса](../getting-started/choosing-the-right-inference-framework) (например, vLLM и SGLang) и фреймворки сервинга моделей (например, BentoML) сразу предоставляют OpenAI-совместимые эндпоинты. Это позволяет легко переключаться между моделями без изменения клиентского кода.
 
-Many [inference backends](../getting-started/choosing-the-right-inference-framework) (e.g., vLLM and SGLang) and model serving frameworks (e.g., BentoML) provide OpenAI-compatible endpoints out of the box. This makes it easy to switch between different models without changing client code.
+## Как вызвать OpenAI-совместимый API
 
-## How to call an OpenAI-compatible API
-
-Here’s a quick example of how easy it is to point your existing OpenAI client to a self-hosted or alternative provider’s endpoint:
+Вот пример, как просто перенаправить существующий OpenAI-клиент на self-hosted или альтернативный эндпоинт:
 
 ```python
 from openai import OpenAI
 
-# Use your custom endpoint URL and API key
+# Используйте свой URL и API-ключ
 client = OpenAI(
     base_url="https://your-custom-endpoint.com/v1",
     api_key="your-api-key"
@@ -56,17 +57,17 @@ client = OpenAI(
 response = client.chat.completions.create(
     model="your-model-name",
     messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "How can I integrate OpenAI-compatible APIs?"}
+        {"role": "system", "content": "Вы — полезный ассистент."},
+        {"role": "user", "content": "Как интегрировать OpenAI-совместимые API?"}
     ]
 )
 
 print(response.choices[0].message)
 ```
 
-Note that the OpenAI API requires the `api_key` field. Most inference frameworks don’t validate this value, so you can use anything, like `api_key="EMPTY"`.
+Обратите внимание: OpenAI API требует поле `api_key`. Большинство фреймворков инференса не проверяют это значение, так что можно использовать любое, например `api_key="EMPTY"`.
 
-You can also call the API directly using a simple HTTP request. Here's an example using `curl`:
+Можно также вызвать API напрямую через HTTP-запрос. Пример с `curl`:
 
 ```bash
 curl https://your-custom-endpoint.com/v1/chat/completions \
@@ -75,48 +76,48 @@ curl https://your-custom-endpoint.com/v1/chat/completions \
   -d '{
     "model": "your-model-name",
     "messages": [
-      {"role": "system", "content": "You are a helpful assistant."},
-      {"role": "user", "content": "How can I integrate OpenAI-compatible APIs?"}
+      {"role": "system", "content": "Вы — полезный ассистент."},
+      {"role": "user", "content": "Как интегрировать OpenAI-совместимые API?"}
     ]
   }'
 ```
 
-If you’re already using OpenAI’s SDKs or REST interface, you can simply redirect them to your own API endpoint. This allows you to keep control over your LLM deployment, reduce vendor lock-in, and ensure your application remains future-proof.
+Если вы уже используете SDK или REST-интерфейс OpenAI, просто перенаправьте их на свой эндпоинт. Это позволит контролировать развёртывание LLM, снизить зависимость от провайдера и сделать приложение более устойчивым к изменениям.
 
-## FAQs
+## Частые вопросы
 
-### Is an OpenAI-compatible API the same as OpenAI’s official API?
+### OpenAI-совместимый API — это тот же официальный API OpenAI?
 
-No. It only mirrors the interface, not the underlying model or infrastructure. Think of it as speaking the same “language,” but to a different system. Depending on the provider, the backend might be:
+Нет. Он только повторяет интерфейс, но не модель или инфраструктуру. Это как говорить на одном «языке», но с разными системами. В зависимости от провайдера бэкенд может быть:
 
-- A self-hosted LLM like Llama or DeepSeek
-- A hosted provider like Together AI or Fireworks
-- A custom enterprise deployment inside your VPC
+- self-hosted LLM (например, Llama или DeepSeek)
+- hosted-провайдер (например, Together AI или Fireworks)
+- кастомный корпоративный деплой внутри VPC
 
-Every backend behaves differently in speed and cost, even if the API shape looks the same.
+Каждый бэкенд отличается по скорости и стоимости, даже если форма API одинаковая.
 
-### What models can I run behind an OpenAI-compatible API?
+### Какие модели можно запускать за OpenAI-совместимым API?
 
-Any modern open-source LLM can be served behind an OpenAI-compatible API, such as Llama, Qwen, Mistral, DeepSeek, Kimi, and domain-specific fine-tuned models.
+Любую современную open-source LLM: Llama, Qwen, Mistral, DeepSeek, Kimi и специализированные дообученные модели.
 
-If you're using frameworks like vLLM and SGLang, they can expose these models through OpenAI-compatible endpoints automatically.
+Если используете фреймворки вроде vLLM и SGLang, они автоматически предоставляют OpenAI-совместимые эндпоинты для этих моделей.
 
-### Is an OpenAI-compatible API required to self-host an LLM?
+### Обязательно ли нужен OpenAI-совместимый API для self-hosted LLM?
 
-Not strictly required, but highly recommended. Without it, you might need to manually rebuild agent integrations, SDK integrations, framework compatibility, and so on. Using the OpenAI schema keeps your stack simple and portable.
+Не строго обязательно, но очень желательно. Без него придётся вручную переписывать интеграции агентов, SDK, совместимость с фреймворками и т.д. Использование схемы OpenAI делает стек проще и переносимее.
 
-### Does using an OpenAI-compatible API save cost?
+### Экономит ли OpenAI-совместимый API деньги?
 
-Not by itself. The API format is just an interface. It doesn’t make inference cheaper.
+Сам по себе — нет. Формат API — это только интерфейс, он не удешевляет инференс.
 
-Cost savings come from where the API is running. Here’s the breakdown:
+Экономия зависит от того, где работает API:
 
-- **If you self-host LLMs through tools like vLLM and SGLang**, you mainly pay for GPUs instead of per-token pricing. You can apply inference optimizations like [KV cache offloading](../inference-optimization/kv-cache-offloading) and [prefill-decode disaggregation](../inference-optimization/prefill-decode-disaggregation) to further cut inference cost. This is usually far cheaper for steady or high-volume workloads.
-- **If you use a hosted provider (e.g., Together AI, Fireworks)**, you still pay per-token or per-request, even if the API is “OpenAI-compatible.”
-- **If you stay on OpenAI**, you pay per-token at OpenAI pricing.
+- **Если вы self-host LLM через vLLM и SGLang**, платите в основном за GPU, а не за токены. Можно применять оптимизации инференса ([выгрузка KV-кэша](../inference-optimization/kv-cache-offloading), [дисагрегация prefill-decode](../inference-optimization/prefill-decode-disaggregation)), чтобы ещё сильнее снизить стоимость. Это обычно намного дешевле для постоянных или крупных нагрузок.
+- **Если используете hosted-провайдера (например, Together AI, Fireworks)**, платите за токены или запросы, даже если API «OpenAI-совместимый».
+- **Если остаетесь на OpenAI**, платите за токены по их тарифам.
 
-The reason some AI teams save money isn’t the OpenAI-compatible API; it’s the ability to self-host any model without breaking their existing application code. Learn more about [serverless vs. self-hosted LLM inference](./serverless-vs-self-hosted-llm-inference).
+Причина экономии у AI-команд — не OpenAI-совместимый API, а возможность self-host любой модели без переписывания клиентского кода. Подробнее: [serverless vs. self-hosted LLM inference](./serverless-vs-self-hosted-llm-inference).
 
 ## Дополнительные ресурсы
->  * [OpenAI documentation](https://platform.openai.com/docs/quickstart?api-mode=chat)
->  * [Examples: Serving LLMs with OpenAI-compatible APIs](https://github.com/bentoml/BentoVLLM)
+>  * [Документация OpenAI](https://platform.openai.com/docs/quickstart?api-mode=chat)
+>  * [Примеры: сервинг LLM с OpenAI-совместимыми API](https://github.com/bentoml/BentoVLLM)

@@ -1,13 +1,14 @@
 ---
-title: "CPU vs GPU vs TPU для LLM инференса"
-description: Learn the differences between CPUs, GPUs, and TPUs and where you can deploy them.
+title: "Где запускается инференс LLM?"
+description: "Сравнение CPU, GPU и TPU для инференса LLM: производительность, стоимость, масштабируемость и лучшие практики."
+date: 2026-02-22
+weight: 96
+
 keywords:
     - CPUs, GPUs, TPUs, CPU vs GPU vs TPU
     - Cloud LLM inference, On-prem LLM inference, On-device LLM inference, GPU inference, Edge LLM inference
     - LLM inference hardware
 ---
-
-# Где запускается инференс LLM?
 
 При внедрении LLM в продакшн выбор правильного оборудования критически важен. Разные типы железа дают разную производительность и экономическую эффективность. Три основных варианта: CPU, GPU и TPU. Понимание их сильных и слабых сторон поможет оптимизировать инференс.
 

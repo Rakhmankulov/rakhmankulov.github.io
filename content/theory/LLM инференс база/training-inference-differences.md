@@ -1,16 +1,16 @@
 ---
-title: "Training vs. inference"
+title: "Обучение и инференс"
 description: "LLM training builds the model while LLM inference applies it to generate real-time outputs from new inputs."
+date: 2026-02-22
+weight: 98
+
 keywords:
   - LLM training vs. inference
   - LLM training, LLM inference
   - Differences between LLM inference and training
   - AI training, training techniques
   - Training and inference
-weight: 90          # ← вот это главное поле
 ---
-
-# Обучение и инференс
 
 Обучение и инференс LLM — это две разные фазы жизненного цикла модели.
 
