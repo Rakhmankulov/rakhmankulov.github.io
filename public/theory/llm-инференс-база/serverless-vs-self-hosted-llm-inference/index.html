@@ -233,7 +233,7 @@
     "keywords": ["Serverless vs. Self-hosted LLM inference","Serverless APIs, Managed APIs, serverless LLMs, serverless inference","Self-hosted LLMs, Self-hosted inference, open source LLMs, custom LLMs","LLM inference cost"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "850"
+    "wordCount": "1023"
   }]
   </script>
 
@@ -683,7 +683,7 @@
   <div class="flex flex-row flex-wrap items-center">
     
     
-      <time datetime="2026-02-22T00:00:00&#43;00:00">22 февраля 2026</time><span class="px-2 text-primary-500">&middot;</span><span>850 слов</span><span class="px-2 text-primary-500">&middot;</span><span title="Время чтения">4 минут</span>
+      <time datetime="2026-02-22T00:00:00&#43;00:00">22 февраля 2026</time><span class="px-2 text-primary-500">&middot;</span><span>1023 слов</span><span class="px-2 text-primary-500">&middot;</span><span title="Время чтения">5 минут</span>
     
 
     
@@ -959,24 +959,38 @@
 <p>В serverless API стоимость за токен фиксирована, но итоговые расходы растут линейно с использованием. Это удобно для прототипов, но быстро становится дорого в продакшене.</p>
 <p>В self-hosting больше работы и инфраструктурных затрат на старте, но стоимость за токен сильно падает с ростом объёма, особенно при оптимизации инференса (например, <a href="../inference-optimization/kv-cache-offloading" >выгрузка KV-кэша</a>).</p>
 <p>На разных этапах внедрения AI стоит пересматривать подход и балансировать между гибкостью и контролем.</p>
+<figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt="llm-inference-prefill.png"
+    src="./img/llm-inference-prefill.png"
+    ></figure>
 <p>Важно: оба варианта (serverless и self-hosted) становятся дешевле со временем благодаря:</p>
 <ul>
-<li>
-<p>Постоянному снижению цен на API из-за конкуренции (например, OpenAI заметно снизил стоимость токенов, см. картинку ниже).</p>
-<figure>
-  ![gpt-cost-drop.png](./img/gpt-cost-drop.png)
-  <figcaption>[Источник: davidtsong](https://x.com/eladgil/status/1827521805755806107)</figcaption>
-</figure>
-</li>
-<li>
-<p>Железо (GPU) становится эффективнее и доступнее.</p>
-</li>
-<li>
-<p>Проекты вроде vLLM и SGLang повышают эффективность инференса.</p>
-</li>
-<li>
-<p>Открытые модели требуют меньше ресурсов благодаря новым оптимизациям.</p>
-</li>
+<li>Постоянному снижению цен на API из-за конкуренции (например, OpenAI заметно снизил стоимость токенов, см. картинку ниже).</li>
+</ul>
+<figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt="llm-inference-prefill.png"
+    src="./img/llm-inference-prefill.png"
+    ></figure>
+<figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt="gpt-cost-drop.png"
+    src="./img/gpt-cost-drop.png"
+    ></figure>
+<ul>
+<li>Железо (GPU) становится эффективнее и доступнее.</li>
+<li>Проекты вроде vLLM и SGLang повышают эффективность инференса.</li>
+<li>Открытые модели требуют меньше ресурсов благодаря новым оптимизациям.</li>
 </ul>
 <p>Подробнее: <a href="https://www.bentoml.com/blog/serverless-vs-dedicated-llm-deployments"  target="_blank" rel="noreferrer">Serverless vs. Dedicated LLM Deployments: анализ стоимости</a>.</p>
 
@@ -1019,10 +1033,6 @@
 </ul>
 <p>Но не обязательно всё строить с нуля. Платформа инференса поможет снизить эти затраты и операционные риски, сделав self-hosting более выгодным.</p>
 <hr>
-<p>В <a href="https://www.bentoml.com/"  target="_blank" rel="noreferrer">Bento</a> мы помогаем компаниям развёртывать любые открытые и кастомные LLM с гибкой архитектурой и оптимизацией инференса. С Bento Inference Platform можно снизить стоимость до 6 раз по сравнению с serverless API.</p>
-<div style={{ margin: '3rem 0' }}>
-[<Button>Связаться с нами</Button>](https://l.bentoml.com/contact-us-llm-inference-handbook)
-</div>
 
 <h2 class="relative group">Частые вопросы
     <div id="частые-вопросы" class="anchor"></div>

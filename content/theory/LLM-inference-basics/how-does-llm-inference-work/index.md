@@ -12,7 +12,7 @@ weight: 97
 # menu:
 #     theory:
 #         parent: "theory"
-# layout: single
+# layout: background
 ---
 
 Во время инференса LLM генерирует текст по одному токену, используя внутренние механизмы внимания и знание предыдущего контекста.
@@ -51,6 +51,13 @@ Token IDs: [33, 13969, 4123, 17203, 2602, 451, 19641, 91643, 13]
 
 ![llm-inference-prefill.png](./img/llm-inference-prefill.png)
 
+<!-- {{< figure 
+  src="./img/llm-inference-prefill.png" 
+  alt="Схема prefill и decode" 
+  caption="Фазы инференса LLM: Prefill и Decode" 
+  class="mx-auto my-8 rounded-xl shadow-lg" 
+>}} -->
+
 ### Decode
 
 После prefill LLM переходит к фазе decode, где генерирует новые токены последовательно, по одному.
@@ -58,10 +65,14 @@ Token IDs: [33, 13969, 4123, 17203, 2602, 451, 19641, 91643, 13]
 
 Для каждого нового токена модель выбирает из вероятностного распределения, сформированного на основе запроса и всех ранее сгенерированных токенов. Этот процесс авторегрессивный: токены T₀ до Tₙ₋₁ используются для генерации токена Tₙ, затем T₀ до Tₙ — для Tₙ₊₁ и так далее.
 
-<!-- <image-card alt="auto-regressive" src="feature-auto-regressive.png" ></image-card> -->
+![auto-regressive.png](./img/auto-regressive.png)
 
-<image-card alt="Схема" src="feature-auto-regressive.png" ></image-card>
-<image-card alt="Тест" src="img/llm-inference-diagram.png" ></image-card>
+<!-- {{< figure 
+  src="./img/auto-regressive.png" 
+  alt="Схема prefill и decode" 
+  caption="Фазы инференса LLM: Prefill и Decode" 
+  class="mx-auto my-8 rounded-xl shadow-lg" 
+>}} -->
 
 Каждый новый токен добавляется к растущей последовательности. Этот авторегрессивный цикл продолжается до:
 

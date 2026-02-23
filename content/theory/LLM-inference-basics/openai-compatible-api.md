@@ -116,7 +116,7 @@ curl https://your-custom-endpoint.com/v1/chat/completions \
 - **Если используете hosted-провайдера (например, Together AI, Fireworks)**, платите за токены или запросы, даже если API «OpenAI-совместимый».
 - **Если остаетесь на OpenAI**, платите за токены по их тарифам.
 
-Причина экономии у AI-команд — не OpenAI-совместимый API, а возможность self-host любой модели без переписывания клиентского кода. Подробнее: [serverless vs. self-hosted LLM inference](./serverless-vs-self-hosted-llm-inference).
+Причина экономии у AI-команд — не OpenAI-совместимый API, а возможность self-host любой модели без переписывания клиентского кода. Подробнее: [Serverless vs. self-hosted LLM инференс](./serverless-vs-self-hosted-llm-inference).
 
 ## Дополнительные ресурсы
 >  * [Документация OpenAI](https://platform.openai.com/docs/quickstart?api-mode=chat)

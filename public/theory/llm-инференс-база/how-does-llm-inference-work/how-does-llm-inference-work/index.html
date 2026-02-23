@@ -919,8 +919,16 @@
 <p>После prefill LLM переходит к фазе decode, где генерирует новые токены последовательно, по одному.</p>
 <p>Для каждого нового токена модель выбирает из вероятностного распределения, сформированного на основе запроса и всех ранее сгенерированных токенов. Этот процесс авторегрессивный: токены T₀ до Tₙ₋₁ используются для генерации токена Tₙ, затем T₀ до Tₙ — для Tₙ₊₁ и так далее.</p>
 <!-- <image-card alt="auto-regressive" src="feature-auto-regressive.png" ></image-card> -->
-<p><image-card alt="Схема" src="feature-auto-regressive.png" ></image-card>
-<image-card alt="Тест" src="img/llm-inference-diagram.png" ></image-card></p>
+<figure><img
+    class="my-0 rounded-md"
+    loading="lazy"
+    decoding="async"
+    fetchpriority="low"
+    alt="feature.jpeg"
+    src="feature.jpeg"
+    ></figure>
+<p><image-card alt="Схема" src="feature.jpeg" ></image-card>
+<image-card alt="Тест" src="feature.jpeg" ></image-card></p>
 <p>Каждый новый токен добавляется к растущей последовательности. Этот авторегрессивный цикл продолжается до:</p>
 <ul>
 <li>достижения максимального лимита токенов,</li>

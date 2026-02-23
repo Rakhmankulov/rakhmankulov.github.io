@@ -13,70 +13,70 @@
     
     <item>
       <title>OpenAI-совместимый API</title>
-      <link>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/openai-compatible-api/</link>
+      <link>//localhost:1313/theory/llm-inference-basics/openai-compatible-api/</link>
       <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
       <author>rakhmankulovbulat@gmail.com</author>
-      <guid>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/openai-compatible-api/</guid>
+      <guid>//localhost:1313/theory/llm-inference-basics/openai-compatible-api/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Serverless vs. self-hosted LLM инференс</title>
-      <link>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/serverless-vs-self-hosted-llm-inference/</link>
+      <link>//localhost:1313/theory/llm-inference-basics/serverless-vs-self-hosted-llm-inference/</link>
       <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
       <author>rakhmankulovbulat@gmail.com</author>
-      <guid>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/serverless-vs-self-hosted-llm-inference/</guid>
+      <guid>//localhost:1313/theory/llm-inference-basics/serverless-vs-self-hosted-llm-inference/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Распределённый инференс для LLM</title>
-      <link>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/distributed-inference/</link>
+      <link>//localhost:1313/theory/llm-inference-basics/distributed-inference/</link>
       <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
       <author>rakhmankulovbulat@gmail.com</author>
-      <guid>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/distributed-inference/</guid>
+      <guid>//localhost:1313/theory/llm-inference-basics/distributed-inference/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Где запускается инференс LLM?</title>
-      <link>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/cpu-vs-gpu-vs-tpu/</link>
+      <link>//localhost:1313/theory/llm-inference-basics/cpu-vs-gpu-vs-tpu/</link>
       <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
       <author>rakhmankulovbulat@gmail.com</author>
-      <guid>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/cpu-vs-gpu-vs-tpu/</guid>
+      <guid>//localhost:1313/theory/llm-inference-basics/cpu-vs-gpu-vs-tpu/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Как работает инференс LLM?</title>
-      <link>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/how-does-llm-inference-work/how-does-llm-inference-work/</link>
+      <link>//localhost:1313/theory/llm-inference-basics/how-does-llm-inference-work/</link>
       <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
       <author>rakhmankulovbulat@gmail.com</author>
-      <guid>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/how-does-llm-inference-work/how-does-llm-inference-work/</guid>
+      <guid>//localhost:1313/theory/llm-inference-basics/how-does-llm-inference-work/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Обучение и инференс</title>
-      <link>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/training-inference-differences/</link>
+      <link>//localhost:1313/theory/llm-inference-basics/training-inference-differences/</link>
       <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
       <author>rakhmankulovbulat@gmail.com</author>
-      <guid>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/training-inference-differences/</guid>
+      <guid>//localhost:1313/theory/llm-inference-basics/training-inference-differences/</guid>
       <description></description>
       
     </item>
     
     <item>
       <title>Что такое инференс LLM?</title>
-      <link>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/what-is-llm-inference/</link>
+      <link>//localhost:1313/theory/llm-inference-basics/what-is-llm-inference/</link>
       <pubDate>Sun, 22 Feb 2026 00:00:00 +0000</pubDate>
       <author>rakhmankulovbulat@gmail.com</author>
-      <guid>//localhost:1313/theory/llm-%D0%B8%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81-%D0%B1%D0%B0%D0%B7%D0%B0/what-is-llm-inference/</guid>
+      <guid>//localhost:1313/theory/llm-inference-basics/what-is-llm-inference/</guid>
       <description></description>
       
     </item>
