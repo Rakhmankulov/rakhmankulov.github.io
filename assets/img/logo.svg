@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" height="120" width="400">
+  
+  <rect fill="white" rx="60" height="120" width="400" y="0" x="0"></rect>
+
+  
+  <text letter-spacing="4" text-anchor="middle" fill="#000000" font-weight="bold" font-size="48" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" y="75" x="200">
+    R · AI · HUB
+  </text>
+</svg>
