@@ -1,0 +1,142 @@
+<div class="kv-cache-calculator" style="border: 1px solid #e0e0e0; padding: 1.5rem; border-radius: 8px; background: #f9f9f9; max-width: 640px; margin: 2rem auto; font-family: system-ui, sans-serif;">
+  <h3 style="margin-top: 0; text-align: center;">KV Cache Memory Calculator</h3>
+  <p style="text-align: center; color: #555; margin-bottom: 1.5rem;">
+    Оценка памяти, требуемой для KV-кэша в трансформерных LLM
+  </p>
+
+  <div style="margin-bottom: 1.2rem; text-align: center;">
+    <strong>Режим расчёта:</strong><br>
+    <label style="margin-right: 1.5rem;">
+      <input type="radio" name="mode" value="standard" checked onchange="updateMode()"> Standard (H × D отдельно)
+    </label>
+    <label>
+      <input type="radio" name="mode" value="simplified" onchange="updateMode()"> Simplified (Model Dim = H×D)
+    </label>
+  </div>
+
+  <div style="display: grid; gap: 1rem; grid-template-columns: 1fr 1fr;">
+    <div>
+      <label>Batch Size (B):</label><br>
+      <input type="number" id="b" value="1" min="1" step="1" oninput="calculate()" style="width: 100%; padding: 0.5rem;">
+    </div>
+    <div>
+      <label>Sequence Length (S / контекст):</label><br>
+      <input type="number" id="s" value="1024" min="1" step="1" oninput="calculate()" style="width: 100%; padding: 0.5rem;">
+    </div>
+    <div>
+      <label>Number of Layers (L):</label><br>
+      <input type="number" id="l" value="32" min="1" step="1" oninput="calculate()" style="width: 100%; padding: 0.5rem;">
+    </div>
+
+    <div id="standard-fields">
+      <div>
+        <label>Attention Heads (H):</label><br>
+        <input type="number" id="h" value="32" min="1" step="1" oninput="calculate()" style="width: 100%; padding: 0.5rem;">
+      </div>
+      <div>
+        <label>Head Dimension (D):</label><br>
+        <input type="number" id="d" value="128" min="1" step="1" oninput="calculate()" style="width: 100%; padding: 0.5rem;">
+      </div>
+    </div>
+
+    <div id="simplified-fields" style="display: none; grid-column: span 2;">
+      <label>Model Dimension (H × D):</label><br>
+      <input type="number" id="hxd" value="4096" min="1" step="1" oninput="calculate()" style="width: 100%; padding: 0.5rem;">
+    </div>
+
+    <div style="grid-column: span 2;">
+      <label>Bit Precision (Q, bits per value):</label><br>
+      <select id="q" onchange="calculate()" style="width: 100%; padding: 0.5rem;">
+        <option value="16" selected>16-bit (fp16 / bf16)</option>
+        <option value="8">8-bit (int8 / fp8)</option>
+        <option value="4">4-bit</option>
+        <option value="2">2-bit</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="margin-top: 2rem; padding: 1rem; background: #e8f4ff; border-radius: 6px; text-align: center;">
+    <strong>KV Cache Size:</strong> <span id="result" style="font-size: 1.4em; color: #0066cc;">≈ 0.50 GB</span>
+  </div>
+
+  <div style="margin-top: 1.5rem; font-size: 0.95em; color: #444;">
+    <details>
+      <summary>Формула и пояснения</summary>
+      <p id="formula" style="margin: 0.8rem 0;">
+        KV Cache Size (GB) = 2 × B × S × L × H × D × (Q / 8) / (1024³)
+      </p>
+      <p style="margin: 0.5rem 0; font-size: 0.9em; color: #666;">
+        • ×2 — потому что хранятся и Key, и Value<br>
+        • (Q / 8) — перевод бит в байты<br>
+        • / (1024³) — перевод байт в гигабайты
+      </p>
+      <p style="margin-top: 1rem; font-style: italic; color: #555;">
+        Размер растёт линейно с длиной последовательности. При длинных контекстах KV-cache может стать основным потребителем памяти.
+      </p>
+    </details>
+  </div>
+</div>
+
+<script>
+function updateMode() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  document.getElementById('standard-fields').style.display = mode === 'standard' ? 'contents' : 'none';
+  document.getElementById('simplified-fields').style.display = mode === 'simplified' ? 'block' : 'none';
+  calculate();
+}
+
+function calculate() {
+  const mode = document.querySelector('input[name="mode"]:checked').value;
+  const b  = parseFloat(document.getElementById('b').value)  || 1;
+  const s  = parseFloat(document.getElementById('s').value)  || 1024;
+  const l  = parseFloat(document.getElementById('l').value)  || 32;
+  const q  = parseFloat(document.getElementById('q').value)  || 16;
+
+  let dimProduct;
+  if (mode === 'standard') {
+    const h = parseFloat(document.getElementById('h').value) || 32;
+    const d = parseFloat(document.getElementById('d').value) || 128;
+    dimProduct = h * d;
+  } else {
+    dimProduct = parseFloat(document.getElementById('hxd').value) || 4096;
+  }
+
+  const bytesPerParam = q / 8;
+  const sizeBytes = 2 * b * s * l * dimProduct * bytesPerParam;
+  const sizeGB = sizeBytes / (1024 ** 3);
+
+  document.getElementById('result').textContent = `≈ ${sizeGB.toFixed(2)} GB`;
+
+  // Обновляем отображаемую формулу
+  let formulaText;
+  if (mode === 'standard') {
+    const h = document.getElementById('h').value || '32';
+    const d = document.getElementById('d').value || '128';
+    formulaText = `KV Cache Size (GB) = 2 × ${b} × ${s} × ${l} × ${h} × ${d} × (${q} / 8) / 1024³ ≈ ${sizeGB.toFixed(2)} GB`;
+  } else {
+    const hxd = document.getElementById('hxd').value || '4096';
+    formulaText = `KV Cache Size (GB) = 2 × ${b} × ${s} × ${l} × ${hxd} × (${q} / 8) / 1024³ ≈ ${sizeGB.toFixed(2)} GB`;
+  }
+  document.getElementById('formula').textContent = formulaText;
+}
+
+// Инициализация
+document.addEventListener('DOMContentLoaded', () => {
+  updateMode();
+  calculate();
+});
+</script>
+
+<style>
+  .kv-cache-calculator input[type=number],
+  .kv-cache-calculator select {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  .kv-cache-calculator label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+</style>
