@@ -2,7 +2,7 @@
 title: "Где запускается инференс LLM?"
 description: "Сравнение CPU, GPU и TPU для инференса LLM: производительность, стоимость, масштабируемость и лучшие практики."
 date: 2026-02-22
-weight: 96
+weight: 4
 
 keywords:
     - CPUs, GPUs, TPUs, CPU vs GPU vs TPU
@@ -65,7 +65,7 @@ TPU лежат в основе самых продвинутых AI-прилож
 
 
 ## Дополнительные ресурсы
->  * [NVIDIA Data Center GPUs Explained: From A100 to B200 and Beyond](https://www.bentoml.com/blog/nvidia-data-center-gpus-explained-a100-h200-b200-and-beyond)
->  * [How to Beat the GPU CAP Theorem in AI Inference](https://www.bentoml.com/blog/how-to-beat-the-gpu-cap-theorem-in-ai-inference)
->  * [State of AI Inference Infrastructure Survey Highlights](https://www.bentoml.com/blog/2024-ai-infra-survey-highlights)
->  * [3 Levels from Laptop to Cluster-Scale Distributed Inference](https://www.bentoml.com/blog/running-local-llms-with-ollama-3-levels-from-local-to-distributed-inference)
+  * [NVIDIA Data Center GPUs Explained: From A100 to B200 and Beyond](https://www.bentoml.com/blog/nvidia-data-center-gpus-explained-a100-h200-b200-and-beyond)
+  * [How to Beat the GPU CAP Theorem in AI Inference](https://www.bentoml.com/blog/how-to-beat-the-gpu-cap-theorem-in-ai-inference)
+  * [State of AI Inference Infrastructure Survey Highlights](https://www.bentoml.com/blog/2024-ai-infra-survey-highlights)
+  * [3 Levels from Laptop to Cluster-Scale Distributed Inference](https://www.bentoml.com/blog/running-local-llms-with-ollama-3-levels-from-local-to-distributed-inference)

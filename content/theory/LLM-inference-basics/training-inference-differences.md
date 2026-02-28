@@ -2,7 +2,7 @@
 title: "Обучение и инференс"
 description: "LLM training builds the model while LLM inference applies it to generate real-time outputs from new inputs."
 date: 2026-02-22
-weight: 98
+weight: 2
 
 keywords:
   - LLM training vs. inference

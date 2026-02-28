@@ -2,7 +2,7 @@
 title: Распределённый инференс для LLM
 description: Распределённый инференс — это практика запуска инференса модели на нескольких GPU, работниках, узлах или регионах для достижения масштабируемого, надёжного и экономичного сервиса. В этом документе объясняется, что такое распределённый инференс, почему команды используют его в продакшене, какие ключевые проблемы он решает и как современные среды выполнения и платформы поддерживают распределённый инференс LLM в масштабе.
 date: 2026-02-22
-weight: 95
+weight: 5
 
 keywords:
     - Распределённый инференс
@@ -209,5 +209,5 @@ Bento Inference Platform — готовая основа для распреде
 Вместо ручной сборки платформа позволяет команде сосредоточиться на моделях и приложениях, а распределённый инференс управляется как единый слой.
 
 ## Дополнительные ресурсы
->  * [The Shift to Distributed LLM Inference](https://www.bentoml.com/blog/the-shift-to-distributed-llm-inference)
->  * [3 уровня: от ноутбука до кластерного распределённого инференса](https://www.bentoml.com/blog/running-local-llms-with-ollama-3-levels-from-local-to-distributed-inference)
+  * [The Shift to Distributed LLM Inference](https://www.bentoml.com/blog/the-shift-to-distributed-llm-inference)
+  * [3 уровня: от ноутбука до кластерного распределённого инференса](https://www.bentoml.com/blog/running-local-llms-with-ollama-3-levels-from-local-to-distributed-inference)

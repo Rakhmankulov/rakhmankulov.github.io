@@ -2,7 +2,7 @@
 title: OpenAI-совместимый API
 description: An OpenAI-compatible API implements the same request and response formats as OpenAI's official API, allowing developers to switch between different models without changing existing code.
 date: 2026-02-22
-weight: 93
+weight: 7
 
 keywords:
     - OpenAI-compatible API, OpenAI-compatible endpoint, OpenAI-compatible server
@@ -119,5 +119,5 @@ curl https://your-custom-endpoint.com/v1/chat/completions \
 Причина экономии у AI-команд — не OpenAI-совместимый API, а возможность self-host любой модели без переписывания клиентского кода. Подробнее: [Serverless vs. self-hosted LLM инференс](./serverless-vs-self-hosted-llm-inference).
 
 ## Дополнительные ресурсы
->  * [Документация OpenAI](https://platform.openai.com/docs/quickstart?api-mode=chat)
->  * [Примеры: сервинг LLM с OpenAI-совместимыми API](https://github.com/bentoml/BentoVLLM)
+  * [Документация OpenAI](https://platform.openai.com/docs/quickstart?api-mode=chat)
+  * [Примеры: сервинг LLM с OpenAI-совместимыми API](https://github.com/bentoml/BentoVLLM)

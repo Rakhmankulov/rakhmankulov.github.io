@@ -7,7 +7,7 @@ keywords:
     - LLM tokenization, tokens
     - KV cache LLM
 date: 2026-02-22
-weight: 97
+weight: 3
 
 # menu:
 #     theory:
@@ -135,5 +135,5 @@ Token IDs: [33, 13969, 4123, 17203, 2602, 451, 19641, 91643, 13]
 Пока авторегрессивные LLM остаются основным архитектурным стандартом. Но dLLM — одно из самых перспективных направлений для следующего поколения инференса. Если вы работаете с авторегрессивными LLM, стоит следить за развитием dLLM.
 
 ## Дополнительные ресурсы
->  * [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](https://arxiv.org/abs/2401.09670)
->  * [Large Language Diffusion Models](https://arxiv.org/abs/2502.09992)
+  * [DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving](https://arxiv.org/abs/2401.09670)
+  * [Large Language Diffusion Models](https://arxiv.org/abs/2502.09992)

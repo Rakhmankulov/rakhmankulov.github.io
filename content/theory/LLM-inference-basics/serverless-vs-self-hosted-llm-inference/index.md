@@ -2,7 +2,7 @@
 title: Serverless vs. self-hosted LLM инференс
 description: Understand the differences between serverless LLM APIs and self-hosted LLM deployments.
 date: 2026-02-22
-weight: 94
+weight: 6
 
 keywords:
     - Serverless vs. Self-hosted LLM inference
@@ -127,7 +127,7 @@ self-hosted AI — это запуск и управление AI-моделям
 Например, если дообучить открытую LLM на собственных данных (юридические, медицинские, финансовые), она может превзойти проприетарные модели в этой области. Такой подход нужен многим индустриям.
 
 ## Дополнительные ресурсы
->  * [Secure and Private DeepSeek Deployment with BentoML](https://www.bentoml.com/blog/secure-and-private-deepseek-deployment-with-bentoml)
->  * [Serverless vs. Dedicated LLM Deployments: анализ стоимости](https://www.bentoml.com/blog/serverless-vs-dedicated-llm-deployments)
->  * [Building RAG Systems with Open-Source and Custom AI Models](https://www.bentoml.com/blog/building-rag-with-open-source-and-custom-ai-models)
->  * [ChatGPT Usage Limits: What They Are and How to Get Rid of Them](https://www.bentoml.com/blog/chatgpt-usage-limits-explained-and-how-to-remove-them)
+  * [Secure and Private DeepSeek Deployment with BentoML](https://www.bentoml.com/blog/secure-and-private-deepseek-deployment-with-bentoml)
+  * [Serverless vs. Dedicated LLM Deployments: анализ стоимости](https://www.bentoml.com/blog/serverless-vs-dedicated-llm-deployments)
+  * [Building RAG Systems with Open-Source and Custom AI Models](https://www.bentoml.com/blog/building-rag-with-open-source-and-custom-ai-models)
+  * [ChatGPT Usage Limits: What They Are and How to Get Rid of Them](https://www.bentoml.com/blog/chatgpt-usage-limits-explained-and-how-to-remove-them)
