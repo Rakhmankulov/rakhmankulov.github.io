@@ -1,4 +1,23 @@
+# Hugo генерируемые файлы
+public/
+resources/
+.hugo_build.lock
+
+# macOS мусор
 .DS_Store
+.AppleDouble
+.LSOverride
+
+# Кэш и временные файлы
+node_modules/
+tmp/
+temp/
+
+# Если есть большие файлы, которые не нужны в git (например видео, архивы)
+*.zip
+*.rar
+*.mov
+*.mp4
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
